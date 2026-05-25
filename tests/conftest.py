@@ -25,5 +25,5 @@ def calculate():
 def make_number():
     print('i am getting number')
     number = randrange(1, 1000, 5)
-    yield
+    yield number
     print(f'number at home {number}')
