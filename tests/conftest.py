@@ -8,7 +8,11 @@ def get_number():
 
 
 def _calculate(a, b):
-    return a + b
+    if isinstance(a, int) and isinstance(b, int):
+        return a + b
+    else:
+        return None
+
 
 
 
