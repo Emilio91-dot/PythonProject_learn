@@ -1,4 +1,0 @@
-[pytest]
-markers =
-    development: marker for running test only on dev env.
-    production: marker for run test on prod env.

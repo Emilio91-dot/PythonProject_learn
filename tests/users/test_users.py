@@ -18,6 +18,15 @@ def test_another():
 
 
 @pytest.mark.development
+@pytest.mark.production
+def test_another_failing_t():
+    """
+    In that test we try to check that 1 is equal to 2
+    """
+    assert 1 == 2
+
+
+@pytest.mark.development
 @pytest.mark.parametrize('first_value, second_value, result', [
     (1, 2, 3),
     (-1, -2, -3),
@@ -26,6 +35,9 @@ def test_another():
     ('b', 'b', None),
 ])
 def test_calculator(first_value, second_value, result, calculate):
+    """
+        In that test we testing calculating with different values(valid and invalid)
+    """
     assert calculate(first_value, second_value) == result
 
 
