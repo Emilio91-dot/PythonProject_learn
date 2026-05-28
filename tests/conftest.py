@@ -1,6 +1,14 @@
 from random import randrange
 import pytest
 
+from src.generators import player_loc
+from src.generators.player import Player
+
+
+@pytest.fixture
+def get_player_generator():
+    return Player()
+
 
 @pytest.fixture
 def get_number():

@@ -1,32 +1,94 @@
 import pytest
 import requests
 
-from src.baseclasses.response import Response
-from src.schemas.user import User
+
+from src.generators.player_loc import PlayerLoc
 
 
-def test_getting_users_list(get_users, make_number):
-    Response(get_users).assert_status_code(200).validate(User)
-    print(make_number)
-
-
-@pytest.mark.development
-@pytest.mark.production
-@pytest.mark.skip(reason="Not implemented")
-def test_another():
-    assert 1 == 1
-
-
-@pytest.mark.development
-@pytest.mark.parametrize('first_value, second_value, result', [
-    (1, 2, 3),
-    (-1, -2, -3),
-    (-1, 2, 1),
-    ('b', -2, None),
-    ('b', 'b', None),
+@pytest.mark.parametrize("status", [
+    "ACTIVE",
+    "INACTIVE",
+    "BANNED",
+    "DELETED",
 ])
-def test_calculator(first_value, second_value, result, calculate):
-    assert calculate(first_value, second_value) == result
+
+def test_something(status, get_player_generator):
+    print(get_player_generator.set_status(status).build())
+
+
+
+
+
+@pytest.mark.parametrize("balance_value", [
+    "100",
+    "0",
+    "-10",
+    "asdasd",
+])
+
+def test_something1(balance_value, get_player_generator):
+    print(get_player_generator.set_balance(balance_value).build())
+
+
+@pytest.mark.parametrize("delete_key", [
+    "account_status",
+    "balance",
+    "localize",
+    "avatar",
+])
+
+def test_something2(delete_key, get_player_generator):
+    object_to_send = get_player_generator.build()
+    del object_to_send[delete_key]
+    print(object_to_send)
+
+
+def test_something3(get_player_generator):
+    object_to_send = get_player_generator.update_inner_generator(
+        "localize", PlayerLoc('fr_FR').set_number(15)
+    ).build()
+    print(object_to_send)
+
+
+
+# from src.baseclasses.response import Response
+# from src.schemas.user import User
+#
+#
+# def test_getting_users_list(get_users, make_number):
+#     Response(get_users).assert_status_code(200).validate(User)
+#     print(make_number)
+#
+#
+# @pytest.mark.development
+# @pytest.mark.production
+# @pytest.mark.skip(reason="Not implemented")
+# def test_another():
+#     assert 1 == 1
+#
+#
+# @pytest.mark.development
+# @pytest.mark.production
+# def test_another_failing_t():
+#     """
+#     In that test we try to check that 1 is equal to 2
+#     """
+#     assert 1 == 2
+#
+#
+# @pytest.mark.development
+# @pytest.mark.parametrize('first_value, second_value, result', [
+#     (1, 2, 3),
+#     (-1, -2, -3),
+#     (-1, 2, 1),
+#     ('b', -2, None),
+#     ('b', 'b', None),
+# ])
+# def test_calculator(first_value, second_value, result, calculate):
+#     """
+#         In that test we testing calculating with different values(valid and invalid)
+#     """
+#     assert calculate(first_value, second_value) == result
 
 
 

@@ -5,7 +5,7 @@ from src.enamc.user_enums import Genders, Statuses, UserErrors
 
 class User(BaseModel):
     id: int
-    name: str
+    name: int
     email: str
     gender: Genders
     status: Statuses
