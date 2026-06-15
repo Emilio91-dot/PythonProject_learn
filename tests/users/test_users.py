@@ -4,14 +4,13 @@ import requests
 
 from src.generators.player_loc import PlayerLoc
 
+from src.schemas.computer import Computer
+from examples import computer
+from src.enamc.user_enums import Statuses
 
-@pytest.mark.parametrize("status", [
-    "ACTIVE",
-    "INACTIVE",
-    "BANNED",
-    "DELETED",
-])
 
+
+@pytest.mark.parametrize("status",Statuses.list())
 def test_something(status, get_player_generator):
     print(get_player_generator.set_status(status).build())
 
@@ -52,6 +51,13 @@ def test_something3(get_player_generator, localizations, loc):
     ).build()
     print(object_to_send)
 
+
+
+
+
+def test_pydantic_object():
+    comp = Computer.model_validate(computer)
+    print(comp.schema_json())
 
 
 # from src.baseclasses.response import Response
