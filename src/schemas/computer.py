@@ -10,7 +10,6 @@ from src.enamc.user_enums import Statuses
 from pydantic.color import Color
 from src.schemas.pysical import Physical
 
-from examples import computer
 
 
 
@@ -37,6 +36,6 @@ class Computer(BaseModel):
 
 
 
-comp = Computer.model_validate(computer)
-
-print(comp)
+# comp = Computer.model_validate(computer)
+#
+# print(comp)

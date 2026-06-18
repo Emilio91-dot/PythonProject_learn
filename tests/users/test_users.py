@@ -5,8 +5,9 @@ import requests
 from src.generators.player_loc import PlayerLoc
 
 from src.schemas.computer import Computer
-from examples import computer
 from src.enamc.user_enums import Statuses
+
+from database import tables
 
 
 
@@ -56,10 +57,64 @@ def test_something3(get_player_generator, localizations, loc):
 
 
 def test_pydantic_object():
-    comp = Computer.model_validate(computer)
-    print(comp.schema_json())
+    pass
 
 
+def test_get_data_users(get_database_session):
+    data = get_database_session.query(tables.Users).first()
+
+    assert data is not None
+    print(data.phone)
+
+def test_try_to_delete_something(get_database_session, get_delete_method):
+    get_delete_method(
+        get_database_session,
+        tables.Orders,
+        tables.Orders.user_id == 3
+    )
+
+    get_delete_method(
+        get_database_session,
+        tables.Users,
+        tables.Users.id == 3
+    )
+
+    deleted_user = get_database_session.query(tables.Users).filter(
+        tables.Users.id == 3
+    ).first()
+
+    assert deleted_user is None
+
+
+
+import time
+
+from database import tables
+
+
+def test_try_to_add_testdata(
+        get_database_session,
+        get_data_add_method,
+        get_user_type_generator
+):
+    user = get_data_add_method(
+        get_database_session,
+        tables.Users,
+        get_user_type_generator.build()
+    )
+
+    print(f"Создан пользователь: {user.name}")
+
+    assert user.id is not None
+
+    print("Все ок, шеф. Дело сделано 😎")
+
+    time.sleep(30)
+
+    get_database_session.delete(user)
+    get_database_session.commit()
+
+    print(f"Пользователь {user.name} удален из БД")
 # from src.baseclasses.response import Response
 # from src.schemas.user import User
 #
