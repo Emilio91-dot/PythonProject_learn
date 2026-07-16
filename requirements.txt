@@ -3,18 +3,32 @@
 
 
 
+
+
+
+
 pytest
 requests
 Faker
-
 SQLAlchemy
 psycopg2-binary
-
 pydantic
 email-validator
-
 allure-pytest
 jsonschema
+
+#pytest
+#requests
+#Faker
+#
+#SQLAlchemy
+#psycopg2-binary
+#
+#pydantic
+#email-validator
+#
+#allure-pytest
+#jsonschema
 
 
 

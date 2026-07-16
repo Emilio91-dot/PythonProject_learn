@@ -2,6 +2,11 @@ from enum import Enum
 
 from src.baseclasses.pyenam import PyEnam
 
+
+"""
+Выбор пола при создании пользователя
+"""
+
 class Genders(Enum):
     female = "female"
     male = "male"
