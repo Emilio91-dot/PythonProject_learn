@@ -1,9 +1,10 @@
 from enum import Enum
 
 
-
 class PyEnam(Enum):
+    """Перечисление с общим методом получения списка значений."""
 
     @classmethod
     def list(cls):
-        return list(map(lambda c: c.value, cls))
+        """Вернуть значения всех элементов перечисления."""
+        return [item.value for item in cls]

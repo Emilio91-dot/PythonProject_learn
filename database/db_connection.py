@@ -1,25 +1,18 @@
-# from sqlalchemy import create_engine, text
-#
-# engine = create_engine(
-#     "postgresql+psycopg2://postgres:1234@localhost:5432/emilgabdrahmanov"
-# )
-#
-# with engine.connect() as conn:
-#     db_name = conn.execute(
-#         text("SELECT current_database();")
-#     ).scalar()
-#
-#     print(f"Подключен к БД: {db_name}")
+"""Пример чтения записей из таблицы users через SQLAlchemy."""
+
+from sqlalchemy import text
+
+from database.database import engine
 
 
-from sqlalchemy import create_engine, text
+def main() -> None:
+    """Вывести до десяти строк из таблицы users."""
+    with engine.connect() as connection:
+        rows = connection.execute(text("SELECT * FROM users LIMIT 10"))
+        for row in rows:
+            print(row)
 
-engine = create_engine(
-    "postgresql+psycopg2://postgres:1234@localhost:5432/emilgabdrahmanov"
-)
 
-with engine.connect() as conn:
-    result = conn.execute(text("SELECT * FROM users LIMIT 10"))
-
-    for row in result:
-        print(row)
+if __name__ == "__main__":
+    # Запрос выполняется только при запуске файла, а не при его импорте.
+    main()
