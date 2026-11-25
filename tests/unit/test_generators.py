@@ -4,6 +4,7 @@ from src.generators.player_loc import PlayerLoc
 
 
 def test_player_has_the_default_fields_and_locales():
+    """Проверяет стандартные поля игрока и наличие английской и русской локализаций."""
     player = Player().build()
 
     assert player["account_status"] == Statuses.ACTIVE.value
@@ -15,6 +16,7 @@ def test_player_has_the_default_fields_and_locales():
 
 
 def test_player_setters_can_be_chained():
+    """Проверяет, что сеттеры можно вызывать цепочкой и они меняют значения."""
     player = Player().set_status(Statuses.INACTIVE.value).set_balance(25).set_avatar("https://example.com/avatar.png")
 
     assert player.build()["account_status"] == Statuses.INACTIVE.value
@@ -23,6 +25,7 @@ def test_player_setters_can_be_chained():
 
 
 def test_player_reset_restores_defaults():
+    """Проверяет, что reset возвращает генератор к значениям по умолчанию."""
     player = Player().set_balance(25).reset()
 
     assert player.build()["balance"] == 0
@@ -30,6 +33,7 @@ def test_player_reset_restores_defaults():
 
 
 def test_player_localization_can_include_a_number():
+    """Проверяет, что локализация содержит имя и принимает дополнительный номер."""
     localization = PlayerLoc("en_US").set_number(11).build()
 
     assert localization["number"] == 11
