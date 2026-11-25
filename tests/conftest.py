@@ -1,7 +1,7 @@
 from random import randrange
+
 import pytest
 
-from src.generators import player_loc
 from src.generators.player import Player
 
 
@@ -18,11 +18,7 @@ def get_number():
 def _calculate(a, b):
     if isinstance(a, int) and isinstance(b, int):
         return a + b
-    else:
-        return None
-
-
-
+    return None
 
 
 @pytest.fixture
@@ -30,12 +26,6 @@ def calculate():
     return _calculate
 
 
-
-
-
 @pytest.fixture
 def make_number():
-    print('i am getting number')
-    number = randrange(1, 1000, 5)
-    yield number
-    print(f'number at home {number}')
+    return randrange(1, 1000, 5)

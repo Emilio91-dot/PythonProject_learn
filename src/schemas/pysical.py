@@ -1,12 +1,5 @@
-
 from pydantic import BaseModel, HttpUrl, UUID4
-
 from pydantic.color import Color
-
-from examples import computer
-
-
-
 
 
 class Physical(BaseModel):
