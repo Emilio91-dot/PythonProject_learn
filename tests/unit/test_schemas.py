@@ -9,6 +9,7 @@ from src.schemas.user import User
 
 
 def test_user_accepts_valid_data_and_normalizes_status_case():
+    """Проверяет валидного пользователя и приведение статуса к элементу перечисления."""
     user = User.model_validate(
         {"id": 1, "name": "Ada Lovelace", "email": "ada@example.com", "gender": "female", "status": "ACTIVE"}
     )
@@ -28,6 +29,7 @@ def test_user_accepts_valid_data_and_normalizes_status_case():
     ],
 )
 def test_user_rejects_invalid_field_values(changes):
+    """Проверяет отклонение некорректного email, имени, пола или статуса."""
     data = {"id": 1, "name": "Ada", "email": "ada@example.com", "gender": "female", "status": "active"}
     data.update(changes)
 
@@ -36,6 +38,7 @@ def test_user_rejects_invalid_field_values(changes):
 
 
 def test_computer_example_matches_nested_schema():
+    """Проверяет валидацию примера компьютера со вложенными объектами."""
     result = Computer.model_validate(computer)
 
     assert result.id == computer["id"]
@@ -43,6 +46,7 @@ def test_computer_example_matches_nested_schema():
 
 
 def test_computer_rejects_an_invalid_ip_address():
+    """Проверяет, что схема компьютера отклоняет неверный IPv4-адрес."""
     data = {**computer, "host_v4": "not-an-ip"}
 
     with pytest.raises(ValidationError):
@@ -50,9 +54,11 @@ def test_computer_rejects_an_invalid_ip_address():
 
 
 def test_post_accepts_ids_up_to_two():
+    """Проверяет, что модель Post принимает допустимый ID, равный двум."""
     assert Post.model_validate({"id": 2, "title": "Example"}).id == 2
 
 
 def test_post_rejects_ids_above_two():
+    """Проверяет, что модель Post отклоняет ID больше двух."""
     with pytest.raises(ValidationError, match="ID must be less than 2"):
         Post.model_validate({"id": 3, "title": "Example"})
