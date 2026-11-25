@@ -6,17 +6,23 @@ from src.schemas.pysical import Physical
 
 
 class Owner(BaseModel):
+    """Контактные данные владельца компьютера."""
+
     name: str
     card_number: PaymentCardNumber
     email: EmailStr
 
 
 class DetailedInfo(BaseModel):
+    """Сгруппированные сведения о внешнем виде и владельцах."""
+
     physical: Physical
     owners: list[Owner]
 
 
 class Computer(BaseModel):
+    """Проверяемая модель компьютера с сетевыми и временными полями."""
+
     id: int
     status: Statuses
     activated_at: PastDate
