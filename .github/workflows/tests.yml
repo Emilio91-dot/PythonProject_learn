@@ -1,0 +1,45 @@
+name: Проверка автотестов
+
+on:
+  push:
+    branches:
+      - main
+      - azaza
+      - codex/review-fixes
+  pull_request:
+    branches:
+      - main
+      - azaza
+      - codex/review-fixes
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Получить код
+        uses: actions/checkout@v7
+
+      - name: Установить Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Установить зависимости проекта
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Запустить автотесты
+        run: python -m pytest
