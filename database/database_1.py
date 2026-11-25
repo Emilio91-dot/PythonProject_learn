@@ -1,29 +1,19 @@
+"""Настройка SQLAlchemy для таблиц проекта."""
+
+import os
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-
-Model = declarative_base()
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 
+class Model(DeclarativeBase):
+    """Базовый класс ORM-моделей пользователей и заказов."""
 
 
-# докер
-DATABASE_URL = (
-    "postgresql+psycopg2://postgres:1234@host.docker.internal:5432/emilgabdrahmanov"
-)
+# Укажите реальный URL через переменную окружения, если нужен PostgreSQL.
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+engine_options = {"connect_args": {"check_same_thread": False}} if DATABASE_URL.startswith("sqlite") else {}
+engine = create_engine(DATABASE_URL, **engine_options)
 
-
-# локально
-# DATABASE_URL = (
-#     "postgresql+psycopg2://postgres:1234@localhost:5432/emilgabdrahmanov"
-# )
-
-engine = create_engine(DATABASE_URL)
-
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
-
-
-# session = SessionLocal()
+# Создавайте отдельную сессию для каждой операции с базой данных.
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
