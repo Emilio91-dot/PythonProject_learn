@@ -1,10 +1,12 @@
+"""Пример чтения записей из таблицы users через SQLAlchemy."""
+
 from sqlalchemy import text
 
 from database.database import engine
 
 
 def main() -> None:
-    """Print a small sample from the users table."""
+    """Вывести до десяти строк из таблицы users."""
     with engine.connect() as connection:
         rows = connection.execute(text("SELECT * FROM users LIMIT 10"))
         for row in rows:
@@ -12,4 +14,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    # Запрос выполняется только при запуске файла, а не при его импорте.
     main()
