@@ -1,6 +1,5 @@
 import pytest
 
-from examples import computer
 from src.enamc.user_enums import Statuses
 from src.generators.player_loc import PlayerLoc
 from src.schemas.computer import Computer
@@ -27,10 +26,21 @@ def test_player_generator_updates_nested_localization(get_player_generator):
     assert result["localize"]["fr"]["number"] == 15
 
 
-def test_computer_example_matches_schema():
-    """Проверяет, что учебный пример компьютера проходит Pydantic-валидацию."""
-    result = Computer.model_validate(computer)
-    assert result.id == computer["id"]
+def test_computer_schema_rejects_invalid_ip():
+    """Проверяет, что схема компьютера отклоняет некорректный IP-адрес."""
+    from pydantic import ValidationError
+
+    data = {
+        "id": 1,
+        "status": "ACTIVE",
+        "activated_at": "2013-06-01",
+        "expiration_at": "2040-06-01",
+        "host_v4": "invalid",
+        "host_v6": "2001:db8::1",
+        "detailed_info": {"physical": {}, "owners": []},
+    }
+    with pytest.raises(ValidationError):
+        Computer.model_validate(data)
 
 
 def test_get_data_users_uses_isolated_test_database(get_database_session, get_user_type_generator):
