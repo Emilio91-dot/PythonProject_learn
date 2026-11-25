@@ -1,12 +1,10 @@
+"""JSON Schema для проверки учебных объектов публикации."""
+
 POST_SCHEMA = {
     "type": "object",
     "properties": {
         "id": {"type": "number"},
-        "title": {"type": "string"}
+        "title": {"type": "string"},
     },
-    "required": ["id"]
+    "required": ["id"],
 }
-
-
-
-## 'id': 1, 'title': 'Post 1'
